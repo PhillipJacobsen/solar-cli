@@ -30,7 +30,7 @@ function connectRelay() {
 (async () => {
 
     // customize yargs 
-    yargs.scriptName("s-cli")        // without this then --help shows filename [command] instead of app name
+    yargs.scriptName("solar-cli")   // without this then --help shows filename [command] instead of app name
         .demandCommand(1)           // require at least 1 command
         .strict()                   // show help menu when invalid command
 
@@ -126,6 +126,30 @@ function connectRelay() {
             const wallet = await client.api("wallets").get(argv.adr);
             const nonce = wallet.body.data.nonce;
             console.log(resultColor("Nonce: %s"), nonce);
+        }
+    }
+    )
+
+
+    /* 
+    Command: Get Balance
+    */
+    yargs.command({
+        command: "balance",
+        describe: "Get balance of wallet",
+        builder: {
+            adr: {
+                describe: "Address",
+                demandOption: true,
+                type: "string"
+            }
+        },
+        async handler(argv) {
+            connectRelay()
+            console.log(infoColor("Retrieving Balance from wallet %s"), argv.adr);
+            const wallet = await client.api("wallets").get(argv.adr);
+            const balance = wallet.body.data.balance;
+            console.log(resultColor("balance: %s"), balance / 100000000);
         }
     }
     )
@@ -247,6 +271,7 @@ function connectRelay() {
             // Step 1: Retrieve the nonce of the sender wallet and increment
             const senderWallet = await client.api("wallets").get(senderWalletAddress);
             const senderNonce = Utils.BigNumber.make(senderWallet.body.data.nonce).plus(1);
+            let transaction = {};
 
             // Step 2: Create and Sign the transaction
             if ('smartbridge' in argv) {
@@ -274,6 +299,7 @@ function connectRelay() {
             console.log(infoColor("Sending transaction..."));
             const broadcastResponse = await client.api("transactions").create({ transactions: [transaction.build().toJson()] });
             //console.log(broadcastResponse);
+            //console.log(JSON.stringify(broadcastResponse.body.data, null, 4))
             if (broadcastResponse.status == 200) {
                 const accept = broadcastResponse.body.data.accept;
                 if (!(accept.length === 0)) {
@@ -290,6 +316,9 @@ function connectRelay() {
         }
     }
     )
+
+
+
 
     yargs.parse()
 })();

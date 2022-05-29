@@ -14,13 +14,14 @@ To get help on each command: `solar-cli <command> --help`
 
 **Commands:**
 
-* s-cli relay Get status of relay node used for accessing blockchain
-* s-cli validate Validate a wallet address
-* s-cli peers Get list of peers
-* s-cli nonce Get nonce of wallet
-* s-cli sign Sign message using Schnorr algorithm
-* s-cli verify Verify Signature using Schnorr algorithm
-* s-cli tx Send transaction with optional smartbridge message
+* solar-cli relay   Get status of relay node used for accessing blockchain
+* solar-cli validate   Validate a wallet address
+* solar-cli peers   Get list of peers
+* solar-cli nonce   Get nonce of wallet
+* solar-cli balance Get balance of wallet
+* solar-cli sign   Sign message using Schnorr algorithm
+* solar-cli verify   Verify Signature using Schnorr algorithm
+* solar-cli tx   Send transaction with optional smartbridge message
 
 **s-cli relay**
 
@@ -49,6 +50,14 @@ Description: Get nonce of a wallet
 Options: 
 
   --adr wallet address
+
+**s-cli balance**
+
+Description: Get balance of a wallet
+
+Options:
+
+--adr wallet address
 
 **s-cli sign**
 
