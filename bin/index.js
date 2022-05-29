@@ -29,9 +29,8 @@ function connectRelay() {
 
 (async () => {
 
-    // Customize yargs version
-    yargs.version("1.1.0")
-        .scriptName("s-cli")        // without this then --help shows filename [command] instead of app name
+    // customize yargs 
+    yargs.scriptName("s-cli")        // without this then --help shows filename [command] instead of app name
         .demandCommand(1)           // require at least 1 command
         .strict()                   // show help menu when invalid command
 
@@ -285,7 +284,6 @@ function connectRelay() {
                     var errormessage = broadcastResponse.body.errors[invalidID].message;
                     console.log(errorColor("Error Message: %s"), errormessage);
                 }
-
             } else {
                 console.log(errorColor("Error sending. Status code: %s"), broadcastResponse.status);
             }

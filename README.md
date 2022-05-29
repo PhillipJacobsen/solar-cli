@@ -4,15 +4,13 @@
 
 Installation: `npm install`
 
-In package.json file configure the **nodeIP** and **network** parameters.
+In package.json file configure the ip address of your Solar relay node via **nodeIP** parameter. 
 
-
+In package.json file configure the network(testnet or mainnet) via **network** parameter.
 
 To get list of commands: `solar-cli --help`
 
 To get help on each command: `solar-cli <command> --help`
-
-
 
 **Commands:**
 
@@ -24,15 +22,11 @@ To get help on each command: `solar-cli <command> --help`
 * s-cli verify Verify Signature using Schnorr algorithm
 * s-cli tx Send transaction with optional smartbridge message
 
-
-
 **s-cli relay**
 
 Description: Get status of relay node used for accessing blockchain
 
 no Options:
-
-
 
 **s-cli validate**
 
@@ -42,15 +36,11 @@ Options:
 
   --adr  wallet address
 
-
-
 **s-cli peers**
 
 Description: Get list of peers
 
 no Options:
-
-
 
 **s-cli nonce**
 
@@ -59,8 +49,6 @@ Description: Get nonce of a wallet
 Options: 
 
   --adr wallet address
-
-
 
 **s-cli sign**
 
@@ -71,8 +59,6 @@ Options:
   --msg  Message to be signed
 
   --passphrase  Your Private Passphrase(12 words)          
-
-
 
 **s-cli verify**
 
@@ -85,8 +71,6 @@ Options:
   --publicKey   Public key of sender
 
   --signature   Message signature
-
-
 
 **s-cli tx**
 
