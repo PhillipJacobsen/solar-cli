@@ -19,9 +19,11 @@ const Connection = Client.Connection;
 const client = new Connection(nodeIP);
 
 
-function connectRelay() {
+async function connectRelay() {
     console.log(infoColor("Opening", network, "connection to relay:", nodeIP));
     Managers.configManager.setFromPreset(network);   //set the network (testnet or mainnet)
+    const blockchain = await client.get("blockchain");
+    Managers.configManager.setHeight(blockchain.body.data.block.height);
     // get current blockchain height
     // const blockchain = await client.get("blockchain");
     // const bridgechainHeight = blockchain.body.data.block.height;
