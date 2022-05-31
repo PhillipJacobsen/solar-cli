@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const package = require("../package.json");
-const isIPFS = require("is-ipfs")   // used for verifing valid IPFS hash
+const isIPFS = require("is-ipfs")   // used for verifying valid IPFS hash
 const nodeIP = package.nodeIP;      // retrieve ip address of relay node from package.json
 const network = package.network;    // retrieve network type (mainnet or testnet) from package.json
 const chalk = require("chalk");
@@ -20,10 +20,10 @@ const Connection = Client.Connection;
 const client = new Connection(nodeIP);
 
 
-function handleError(err) {
-    console.log(errorColor("oh crap."));
-    console.log(errorColor(err));
-}
+// function handleError(err) {
+//     console.log(errorColor("oh crap."));
+//     console.log(errorColor(err));
+// }
 
 async function connectRelay() {
     console.log(infoColor("Opening", network, "connection to relay:", nodeIP));
