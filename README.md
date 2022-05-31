@@ -73,6 +73,6 @@ To get help on each command: `solar-cli <command> --help`
 ###  **solar-cli tx-ipfs**
 **Description:** Send IFPS transaction with optional smartbridge message  
 **Options:**  
-  --adr  Recipient's Address  
+  --hash  IPFS Hash
   --passphrase  Your Private Passphrase(12 words)  
   --smartbridge  Message to include with transaction(optional)  
