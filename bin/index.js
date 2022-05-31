@@ -20,11 +20,6 @@ const Connection = Client.Connection;
 const client = new Connection(nodeIP);
 
 
-// function handleError(err) {
-//     console.log(errorColor("oh crap."));
-//     console.log(errorColor(err));
-// }
-
 async function connectRelay() {
     console.log(infoColor("Opening", network, "connection to relay:", nodeIP));
 
@@ -307,6 +302,11 @@ async function connectRelay() {
                 demandOption: true,
                 type: "string"
             },
+            fee: {
+                describe: "Transaction Fee",
+                demandOption: true,
+                type: "string"
+            },           
             passphrase: {
                 describe: "Your Private Passphrase(12 words)",
                 demandOption: true,
@@ -350,7 +350,7 @@ async function connectRelay() {
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
                     .amount(amount)
-                    .fee(3000000)
+                    .fee(argv.fee)
                     .vendorField(argv.smartbridge)
                     .sign(passphrase);
             } else {
@@ -360,7 +360,7 @@ async function connectRelay() {
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
                     .amount(amount)
-                    .fee(3000000)
+                    .fee(argv.fee)
                     .sign(passphrase);
             }
 
@@ -400,6 +400,11 @@ async function connectRelay() {
                 demandOption: true,
                 type: "string"
             },
+            fee: {
+                describe: "Transaction Fee",
+                demandOption: true,
+                type: "string"
+            },              
             passphrase: {
                 describe: "Your Private Passphrase(12 words)",
                 demandOption: true,
@@ -446,7 +451,7 @@ async function connectRelay() {
                     .version(3)
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
-                    .fee(3000000)
+                    .fee(argv.fee)
                     .vendorField(argv.smartbridge)
                     .sign(passphrase);
             } else {
@@ -455,7 +460,7 @@ async function connectRelay() {
                     .version(3)
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
-                    .fee(3000000)
+                    .fee(argv.fee)
                     .sign(passphrase);
             }
 
