@@ -306,7 +306,7 @@ async function connectRelay() {
                 describe: "Transaction Fee",
                 demandOption: true,
                 type: "string"
-            },           
+            },
             passphrase: {
                 describe: "Your Private Passphrase(12 words)",
                 demandOption: true,
@@ -344,7 +344,7 @@ async function connectRelay() {
 
             // Step 2: Create and Sign the transaction
             if ('smartbridge' in argv) {
-                console.log("smartbridge exists");
+                //   console.log("smartbridge exists");
                 transaction = Transactions.BuilderFactory.transfer()
                     .version(3)
                     .nonce(senderNonce.toFixed())
@@ -354,7 +354,7 @@ async function connectRelay() {
                     .vendorField(argv.smartbridge)
                     .sign(passphrase);
             } else {
-                console.log("smartbridge does not exist");
+                //    console.log("smartbridge does not exist");
                 transaction = Transactions.BuilderFactory.transfer()
                     .version(3)
                     .nonce(senderNonce.toFixed())
@@ -404,7 +404,7 @@ async function connectRelay() {
                 describe: "Transaction Fee",
                 demandOption: true,
                 type: "string"
-            },              
+            },
             passphrase: {
                 describe: "Your Private Passphrase(12 words)",
                 demandOption: true,
@@ -446,7 +446,7 @@ async function connectRelay() {
 
             // Step 2: Create and Sign the transaction
             if ('smartbridge' in argv) {
-                console.log("smartbridge exists");
+                //console.log("smartbridge exists");
                 transaction = Transactions.BuilderFactory.ipfs()
                     .version(3)
                     .nonce(senderNonce.toFixed())
@@ -455,7 +455,7 @@ async function connectRelay() {
                     .vendorField(argv.smartbridge)
                     .sign(passphrase);
             } else {
-                console.log("smartbridge does not exist");
+                // console.log("smartbridge does not exist");
                 transaction = Transactions.BuilderFactory.ipfs()
                     .version(3)
                     .nonce(senderNonce.toFixed())
