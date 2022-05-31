@@ -1,5 +1,6 @@
 
 # Example CLI using Solar Blockchain SDK
+This project is intended to provide an example of how to integrate the [Solar Network Blockchain](https://solar.org/) SDK into a node.js application. It implements a command line interface to perform tasks such as check wallet balance, sign / verify messages, and send transactions.
 
 ## Installation
 `npm install`

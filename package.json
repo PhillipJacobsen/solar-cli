@@ -6,9 +6,6 @@
   "bin": {
     "solar-cli": "./bin/index.js"
   },
-  "scripts": {
-    "test": "test"
-  },
   "author": "pj",
   "license": "ISC",
   "dependencies": {
