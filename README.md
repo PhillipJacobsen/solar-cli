@@ -67,6 +67,7 @@ To get help on each command: `solar-cli <command> --help`
 **Options:**  
   --adr  Recipient's Address  
   --amt  Amount of coins to send  
+  --fee  Transaction fee amount
   --passphrase  Your Private Passphrase(12 words)  
   --smartbridge  Message to include with transaction(optional)  
 
@@ -74,5 +75,6 @@ To get help on each command: `solar-cli <command> --help`
 **Description:** Send IFPS transaction with optional smartbridge message  
 **Options:**  
   --hash  IPFS Hash  
+  --fee  Transaction fee amoun
   --passphrase  Your Private Passphrase(12 words)  
   --smartbridge  Message to include with transaction(optional)  
