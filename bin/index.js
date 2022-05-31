@@ -26,7 +26,7 @@ function handleError(err) {
 }
 
 async function connectRelay() {
-    console.log(infoColor("Opening", network, "connection to relay:", "nodeIP"));
+    console.log(infoColor("Opening", network, "connection to relay:", nodeIP));
 
     Managers.configManager.setFromPreset(network);   //set the network (testnet or mainnet)
     try {
@@ -190,11 +190,19 @@ async function connectRelay() {
             }
         },
         async handler(argv) {
-            connectRelay()
             console.log(infoColor("Retrieving Balance from wallet %s"), argv.adr);
-            const wallet = await client.api("wallets").get(argv.adr);
-            const balance = wallet.body.data.balance;
-            console.log(resultColor("balance: %s"), balance / 100000000);
+
+            if (await connectRelay()) {
+                try {
+                    const wallet = await client.api("wallets").get(argv.adr);
+                    const balance = wallet.body.data.balance;
+                    console.log(resultColor("balance: %s"), balance / 100000000);
+                } catch (err) {
+                    console.log(errorColor(err));
+                    console.log(errorColor("Cannot retrieve balance"))
+                }
+            } else {
+            }
         }
     }
     )
@@ -321,7 +329,7 @@ async function connectRelay() {
             const senderWalletAddress = Identities.Address.fromPassphrase(passphrase);
             const recipientWalletAddress = argv.adr;
             const amount = argv.amt;
-            
+
             // Step 1: Retrieve the nonce of the sender wallet and increment
             let senderNonce;
             try {
@@ -359,7 +367,6 @@ async function connectRelay() {
             // Step 3: Broadcast the transaction
             console.log(infoColor("Sending transaction..."));
             const broadcastResponse = await client.api("transactions").create({ transactions: [transaction.build().toJson()] });
-            //console.log(broadcastResponse);
             //console.log(JSON.stringify(broadcastResponse.body.data, null, 4))
             if (broadcastResponse.status == 200) {
                 const accept = broadcastResponse.body.data.accept;
