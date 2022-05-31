@@ -1,3 +1,4 @@
+
 # Example CLI using Solar Blockchain SDK
 
 ## Installation
@@ -25,52 +26,52 @@ To get help on each command: `solar-cli <command> --help`
 
 
 ### **solar-cli relay**
-**Description:** Get status of relay node used for accessing blockchain
-**Options:** none
+**Description:** Get status of relay node used for accessing blockchain  
+**Options:** none  
 
 ###  **solar-cli validate**
-**Description:** Validate a wallet address
-**Options:**
-  --adr  wallet address
+**Description:** Validate a wallet address  
+**Options:**  
+  --adr  wallet address  
 
 ###  **solar-cli peers**
-**Description:** Get list of peers
-**Options:** none
+**Description:** Get list of peers  
+**Options:** none  
 
 ###  **solar-cli nonce**
-**Description:** Get nonce of a wallet
-**Options:** 
-  --adr wallet address
+**Description:** Get nonce of a wallet  
+**Options:**   
+  --adr wallet address  
 
 ### **solar-cli balance**
-**Description:** Get balance of a wallet
-**Options:** 
-  --adr wallet address
+**Description:** Get balance of a wallet  
+**Options:**   
+  --adr wallet address  
 
 ###  **solar-cli sign**
-**Description**: Sign message using Schnorr algorithm
-**Options:**
-  --msg  Message to be signed
-  --passphrase  Your Private Passphrase(12 words)
+**Description**: Sign message using Schnorr algorithm  
+**Options:**  
+  --msg  Message to be signed  
+  --passphrase  Your Private Passphrase(12 words)  
 
 ###  **solar-cli verify**
-**Description:** Verify Signature using Schnorr algorithm
-**Options:**
-  --msg  Message to be signed
-  --publicKey   Public key of sender
-  --signature   Message signature
+**Description:** Verify Signature using Schnorr algorithm  
+**Options:**  
+  --msg  Message to be signed  
+  --publicKey   Public key of sender  
+  --signature   Message signature  
 
 ###  **solar-cli tx**
-**Description:** Send transaction with optional smartbridge message
-**Options:**
-  --adr  Recipient's Address
-  --amt  Amount of coins to send
-  --passphrase  Your Private Passphrase(12 words)
-  --smartbridge  Message to include with transaction(optional)
+**Description:** Send transaction with optional smartbridge message  
+**Options:**  
+  --adr  Recipient's Address  
+  --amt  Amount of coins to send  
+  --passphrase  Your Private Passphrase(12 words)  
+  --smartbridge  Message to include with transaction(optional)  
 
-###  **s-cli tx-ipfs**
-**Description:** Send IFPS transaction with optional smartbridge message
-**Options:**
-  --adr  Recipient's Address
-  --passphrase  Your Private Passphrase(12 words)
-  --smartbridge  Message to include with transaction(optional)
+###  **solar-cli tx-ipfs**
+**Description:** Send IFPS transaction with optional smartbridge message  
+**Options:**  
+  --adr  Recipient's Address  
+  --passphrase  Your Private Passphrase(12 words)  
+  --smartbridge  Message to include with transaction(optional)  
