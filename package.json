@@ -15,6 +15,7 @@
     "is-ipfs": "^6.0.2",
     "yargs": "^17.5.1"
   },
-  "nodeIP": "http://116.203.50.145:6003/api",
+  "nodeIP": "https://sxp.testnet.sh/api",
   "network": "testnet"
 }
+
