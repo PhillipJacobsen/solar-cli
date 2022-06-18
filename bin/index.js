@@ -10,8 +10,10 @@ const errorColor = chalk.bold.bgRed;
 const yargs = require("yargs");
 
 // import Solar and ARK SDK libraries
-const Crypto = require("@solar-network/crypto");
-const Client = require("@arkecosystem/client");
+
+// "@solar-network/crypto": "^3.3.0",
+const Crypto = require("@solar-network/crypto");    // https://www.npmjs.com/package/@solar-network/crypto
+const Client = require("@arkecosystem/client");     // https://www.npmjs.com/package/@arkecosystem/client
 const Identities = Crypto.Identities;
 const Managers = Crypto.Managers;
 const Utils = Crypto.Utils;
@@ -346,7 +348,6 @@ async function connectRelay() {
             if ('smartbridge' in argv) {
                 //   console.log("smartbridge exists");
                 transaction = Transactions.BuilderFactory.transfer()
-                    .version(3)
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
                     .amount(amount)
@@ -356,7 +357,6 @@ async function connectRelay() {
             } else {
                 //    console.log("smartbridge does not exist");
                 transaction = Transactions.BuilderFactory.transfer()
-                    .version(3)
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
                     .amount(amount)
@@ -448,7 +448,6 @@ async function connectRelay() {
             if ('smartbridge' in argv) {
                 //console.log("smartbridge exists");
                 transaction = Transactions.BuilderFactory.ipfs()
-                    .version(3)
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
                     .fee(argv.fee)
@@ -457,7 +456,6 @@ async function connectRelay() {
             } else {
                 // console.log("smartbridge does not exist");
                 transaction = Transactions.BuilderFactory.ipfs()
-                    .version(3)
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
                     .fee(argv.fee)
@@ -484,6 +482,128 @@ async function connectRelay() {
         }
     }
     )
+
+
+
+
+
+   /* 
+    Command: Vote 
+    */
+    yargs.command({
+        command: "vote",
+        describe: "Send a vote transaction",
+        builder: {
+            delegate: {
+                describe: "Delegate Name",
+                demandOption: true,
+                type: "string"
+            },
+            fee: {
+                describe: "Transaction Fee",
+                demandOption: true,
+                type: "string"
+            },
+            passphrase: {
+                describe: "Your Private Passphrase(12 words)",
+                demandOption: true,
+                type: "string"
+            },
+            smartbridge: {
+                describe: "Message to include with transaction(optional)",
+                demandOption: false,
+                type: "string"
+            },
+
+        },
+        async handler(argv) {
+
+            if (!(await connectRelay())) {
+                return
+            }
+            const passphrase = argv.passphrase;
+            const senderWalletAddress = Identities.Address.fromPassphrase(passphrase);
+            let delegate = argv.delegate;
+            console.log(resultColor(delegate));
+            delegate = delegate.replace(/(\s*?{\s*?|\s*?,\s*?)(['"])?([a-zA-Z0-9]+)(['"])?:/g, '$1"$3":');      //create proper json that was stripped away by commmand line preprocessor
+
+            // Step 1: Retrieve the nonce of the sender wallet and increment
+            let senderNonce;
+            try {
+                const senderWallet = await client.api("wallets").get(senderWalletAddress);
+                senderNonce = Utils.BigNumber.make(senderWallet.body.data.nonce).plus(1);
+            } catch (err) {
+                console.log(errorColor(err));
+                console.log(errorColor("Cannot retrieve nonce"))
+            }
+
+            let transaction = {};
+
+// {"asset": {"votes": {}}} in the transaction payload would be the equivalent of unvoting everyone.
+// {"asset": {"votes": {"gym": 40, "cactus1549": 40, "friendsoflittleyus": 20}}} would vote for the named 3 delegates weighted 40%, 40% and 20%, and would replace any other voting permutation previously set by an earlier vote.
+// I think I mentioned before, it can be 2 decimal places too, so {"asset": {"votes": {"gym": 39.99, "cactus1549": 40.01, "friendsoflittleyus": 20}}} is valid etc.
+
+// Step 2: Create and Sign the transaction
+            if ('smartbridge' in argv) {
+                //console.log("smartbridge exists");
+                transaction = Transactions.BuilderFactory.vote()
+                    .nonce(senderNonce.toFixed())
+                    .votesAsset(JSON.parse(delegate))       //this works with variable
+                    //.votesAsset({})     //cancel vote works!!!!!!
+                    //.votesAsset({"goose": 0.01, "pnwdrew": 30.00, "friendsoflittleyus": 69.99})  //this works
+                    .fee(argv.fee)
+                    .vendorField(argv.smartbridge)
+                    .sign(passphrase);
+            } else {
+                // console.log("smartbridge does not exist");
+                transaction = Transactions.BuilderFactory.vote()
+                    .nonce(senderNonce.toFixed())
+                    .votesAsset(JSON.parse(delegate))       //this works with variable
+                    .fee(argv.fee)
+                    .sign(passphrase);
+            }
+
+            // Step 3: Broadcast the transaction
+            console.log(infoColor("Sending transaction..."));
+            const broadcastResponse = await client.api("transactions").create({ transactions: [transaction.build().toJson()] });
+            // console.log(JSON.stringify(broadcastResponse.body, null, 4))
+            if (broadcastResponse.status == 200) {
+                const accept = broadcastResponse.body.data.accept;
+                if (!(accept.length === 0)) {
+                    const txid = broadcastResponse.body.data.accept[0];
+                    console.log(resultColor("Transaction ID: %s"), txid);
+                } else {
+                    var invalidID = broadcastResponse.body.data.invalid[0];
+                    var errormessage = broadcastResponse.body.errors[invalidID].message;
+                    console.log(errorColor("Error Message: %s"), errormessage);
+                }
+            } else {
+                console.log(errorColor("Error sending. Status code: %s"), broadcastResponse.status);
+            }
+        }
+    }
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     process.on("uncaughtException", (err) => {
         console.log(errorColor("UncaughtException %s"), err);
