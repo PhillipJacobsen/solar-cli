@@ -11,7 +11,7 @@ const yargs = require("yargs");
 
 // import Solar and ARK SDK libraries
 
-// "@solar-network/crypto": "^3.3.0",
+// "@solar-network/crypto": "^4.0.0-next.0",
 const Crypto = require("@solar-network/crypto");    // https://www.npmjs.com/package/@solar-network/crypto
 const Client = require("@arkecosystem/client");     // https://www.npmjs.com/package/@arkecosystem/client
 const Identities = Crypto.Identities;
@@ -292,7 +292,7 @@ async function connectRelay() {
     */
     yargs.command({
         command: "tx",
-        describe: "Send transaction with optional smartbridge message",
+        describe: "Send transaction with optional Memo message",
         builder: {
             adr: {
                 describe: "Recipient's Address",
@@ -314,7 +314,7 @@ async function connectRelay() {
                 demandOption: true,
                 type: "string"
             },
-            smartbridge: {
+            memo: {
                 describe: "Message to include with transaction(optional)",
                 demandOption: false,
                 type: "string"
@@ -345,17 +345,17 @@ async function connectRelay() {
             let transaction = {};
 
             // Step 2: Create and Sign the transaction
-            if ('smartbridge' in argv) {
-                //   console.log("smartbridge exists");
+            if ('memo' in argv) {
+                //   console.log("Memo exists");
                 transaction = Transactions.BuilderFactory.transfer()
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
                     .amount(amount)
                     .fee(argv.fee)
-                    .vendorField(argv.smartbridge)
+                    .memo(argv.memo)
                     .sign(passphrase);
             } else {
-                //    console.log("smartbridge does not exist");
+                //    console.log("Memo does not exist");
                 transaction = Transactions.BuilderFactory.transfer()
                     .nonce(senderNonce.toFixed())
                     .recipientId(recipientWalletAddress)
@@ -393,7 +393,7 @@ async function connectRelay() {
     */
     yargs.command({
         command: "tx-ipfs",
-        describe: "Send IPFS transaction with optional smartbridge message",
+        describe: "Send IPFS transaction with optional Memo message",
         builder: {
             hash: {
                 describe: "IPFS Hash",
@@ -410,7 +410,7 @@ async function connectRelay() {
                 demandOption: true,
                 type: "string"
             },
-            smartbridge: {
+            memo: {
                 describe: "Message to include with transaction(optional)",
                 demandOption: false,
                 type: "string"
@@ -445,16 +445,16 @@ async function connectRelay() {
             let transaction = {};
 
             // Step 2: Create and Sign the transaction
-            if ('smartbridge' in argv) {
-                //console.log("smartbridge exists");
+            if ('memo' in argv) {
+                //console.log("Memo exists");
                 transaction = Transactions.BuilderFactory.ipfs()
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
                     .fee(argv.fee)
-                    .vendorField(argv.smartbridge)
+                    .memo(argv.memo)
                     .sign(passphrase);
             } else {
-                // console.log("smartbridge does not exist");
+                // console.log("Memo does not exist");
                 transaction = Transactions.BuilderFactory.ipfs()
                     .nonce(senderNonce.toFixed())
                     .ipfsAsset(ipfsHash)
@@ -509,7 +509,7 @@ async function connectRelay() {
                 demandOption: true,
                 type: "string"
             },
-            smartbridge: {
+            memo: {
                 describe: "Message to include with transaction(optional)",
                 demandOption: false,
                 type: "string"
@@ -544,18 +544,18 @@ async function connectRelay() {
 // I think I mentioned before, it can be 2 decimal places too, so {"asset": {"votes": {"gym": 39.99, "cactus1549": 40.01, "friendsoflittleyus": 20}}} is valid etc.
 
 // Step 2: Create and Sign the transaction
-            if ('smartbridge' in argv) {
-                //console.log("smartbridge exists");
+            if ('memo' in argv) {
+                //console.log("Memo exists");
                 transaction = Transactions.BuilderFactory.vote()
                     .nonce(senderNonce.toFixed())
                     .votesAsset(JSON.parse(delegate))       //this works with variable
                     //.votesAsset({})     //cancel vote works!!!!!!
                     //.votesAsset({"goose": 0.01, "pnwdrew": 30.00, "friendsoflittleyus": 69.99})  //this works
                     .fee(argv.fee)
-                    .vendorField(argv.smartbridge)
+                    .memo(argv.memo)
                     .sign(passphrase);
             } else {
-                // console.log("smartbridge does not exist");
+                // console.log("memo does not exist");
                 transaction = Transactions.BuilderFactory.vote()
                     .nonce(senderNonce.toFixed())
                     .votesAsset(JSON.parse(delegate))       //this works with variable
