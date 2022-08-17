@@ -22,9 +22,9 @@ To get help on each command: `solar-cli <command> --help`
 * **solar-cli balance** Get balance of wallet
 * **solar-cli sign**   Sign message using Schnorr algorithm
 * **solar-cli verify**   Verify Signature using Schnorr algorithm
-* **solar-cli tx**   Send transaction with optional smartbridge message
-* **solar-cli tx-ipfs**   Send IPFS transaction with optional smartbridge message
-
+* **solar-cli tx**   Send transaction with optional memo message
+* **solar-cli tx-ipfs**   Send IPFS transaction with optional memo message
+* **solar-cli vote**      Send a vote transaction with optional memo message
 
 ### **solar-cli relay**
 **Description:** Get status of relay node used for accessing blockchain  
@@ -69,12 +69,22 @@ To get help on each command: `solar-cli <command> --help`
   --amt  Amount of coins to send  
   --fee  Transaction fee amount  
   --passphrase  Your Private Passphrase(12 words)  
-  --smartbridge  Message to include with transaction(optional)  
+  --memo  Message to include with transaction(optional)  
 
 ###  **solar-cli tx-ipfs**
-**Description:** Send IFPS transaction with optional smartbridge message  
+**Description:** Send IFPS transaction with optional memo message  
 **Options:**  
   --hash  IPFS Hash  
   --fee  Transaction fee amount  
   --passphrase  Your Private Passphrase(12 words)  
-  --smartbridge  Message to include with transaction(optional)  
+  --memo  Message to include with transaction(optional)  
+  
+###  **solar-cli vote**
+**Description:** Send a Vote transaction with optional memo message  
+**Options:**  
+  --delegate  JSON encoded Delegate Vote Asset 
+        unvote usage: --delegate '{}'
+        vote usage: --delegate '{"dokdo":5, "friendsoflittleyus":95}'     
+  --fee  Transaction fee amount  
+  --passphrase  Your Private Passphrase(12 words)  
+  --memo  Message to include with transaction(optional)  
