@@ -82,9 +82,8 @@ To get help on each command: `solar-cli <command> --help`
 ###  **solar-cli vote**
 **Description:** Send a Vote transaction with optional memo message  
 **Options:**  
-  --delegate  JSON encoded Delegate Vote Asset 
-        unvote usage: --delegate '{}'
-        vote usage: --delegate '{"dokdo":5, "friendsoflittleyus":95}'     
+  --delegate  'JSON encoded Delegate Vote Asset'
   --fee  Transaction fee amount  
   --passphrase  Your Private Passphrase(12 words)  
   --memo  Message to include with transaction(optional)  
+

@@ -495,7 +495,7 @@ async function connectRelay() {
         describe: "Send a vote transaction",
         builder: {
             delegate: {
-                describe: "Delegate Name",
+                describe: "'JSON encoded Delegate Vote Asset'",
                 demandOption: true,
                 type: "string"
             },
@@ -539,17 +539,14 @@ async function connectRelay() {
 
             let transaction = {};
 
-// {"asset": {"votes": {}}} in the transaction payload would be the equivalent of unvoting everyone.
-// {"asset": {"votes": {"gym": 40, "cactus1549": 40, "friendsoflittleyus": 20}}} would vote for the named 3 delegates weighted 40%, 40% and 20%, and would replace any other voting permutation previously set by an earlier vote.
-// I think I mentioned before, it can be 2 decimal places too, so {"asset": {"votes": {"gym": 39.99, "cactus1549": 40.01, "friendsoflittleyus": 20}}} is valid etc.
-
 // Step 2: Create and Sign the transaction
             if ('memo' in argv) {
                 //console.log("Memo exists");
                 transaction = Transactions.BuilderFactory.vote()
                     .nonce(senderNonce.toFixed())
                     .votesAsset(JSON.parse(delegate))       
-                    //.votesAsset({"goose": 0.01, "pnwdrew": 30.00, "friendsoflittleyus": 69.99})  //this works
+                    //.votesAsset({"goose": 0.01, "pnwdrew": 30.00, "friendsoflittleyus": 69.99})  
+                    //.votesAsset({"})    cancel vote
                     .fee(argv.fee)
                     .memo(argv.memo)
                     .sign(passphrase);
@@ -582,25 +579,6 @@ async function connectRelay() {
         }
     }
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
