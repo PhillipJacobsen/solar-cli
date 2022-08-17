@@ -16,6 +16,6 @@
     "is-ipfs": "^6.0.2",
     "yargs": "^17.5.1"
   },
-  "nodeIP": "https://sxp.mainnet.sh/api",
-  "network": "mainnet"
+  "nodeIP": "https://sxp.testnet.sh/api",
+  "network": "testnet"
 }

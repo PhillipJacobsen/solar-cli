@@ -548,8 +548,7 @@ async function connectRelay() {
                 //console.log("Memo exists");
                 transaction = Transactions.BuilderFactory.vote()
                     .nonce(senderNonce.toFixed())
-                    .votesAsset(JSON.parse(delegate))       //this works with variable
-                    //.votesAsset({})     //cancel vote works!!!!!!
+                    .votesAsset(JSON.parse(delegate))       
                     //.votesAsset({"goose": 0.01, "pnwdrew": 30.00, "friendsoflittleyus": 69.99})  //this works
                     .fee(argv.fee)
                     .memo(argv.memo)
@@ -558,7 +557,7 @@ async function connectRelay() {
                 // console.log("memo does not exist");
                 transaction = Transactions.BuilderFactory.vote()
                     .nonce(senderNonce.toFixed())
-                    .votesAsset(JSON.parse(delegate))       //this works with variable
+                    .votesAsset(JSON.parse(delegate))       
                     .fee(argv.fee)
                     .sign(passphrase);
             }
