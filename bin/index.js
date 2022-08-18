@@ -525,7 +525,7 @@ async function connectRelay() {
             const senderWalletAddress = Identities.Address.fromPassphrase(passphrase);
             let delegate = argv.delegate;
             console.log(resultColor(delegate));
-            delegate = delegate.replace(/(\s*?{\s*?|\s*?,\s*?)(['"])?([a-zA-Z0-9]+)(['"])?:/g, '$1"$3":');      //create proper json that was stripped away by commmand line preprocessor
+            delegate = delegate.replace(/(\s*?{\s*?|\s*?,\s*?)(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '$1"$3":');      //create proper json that was stripped away by commmand line preprocessor
 
             // Step 1: Retrieve the nonce of the sender wallet and increment
             let senderNonce;
