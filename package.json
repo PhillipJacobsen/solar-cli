@@ -11,7 +11,6 @@
   "dependencies": {
     "@arkecosystem/client": "^3.0.0",
     "@solar-network/crypto": "^4.0.2",
-    "@solar-network/utils": "^3.4.0-next.2",
     "chalk": "4.1.2",
     "is-ipfs": "^6.0.2",
     "yargs": "^17.5.1"

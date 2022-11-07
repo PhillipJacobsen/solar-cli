@@ -224,19 +224,20 @@ async function connectRelay() {
             },
         },
         handler(argv) {
-            console.log(infoColor("Signing message"));
-            const message = argv.msg;
-            const passphrase = argv.passphrase;
-            const keys = Identities.Keys.fromPassphrase(passphrase);
-            const hash = Crypto.Crypto.HashAlgorithms.sha256(message);
-            const signature = Crypto.Crypto.Hash.signSchnorr(hash, keys);
-            const publicKey = Identities.PublicKey.fromPassphrase(passphrase);
-            const signed = {
-                message,
-                signature,
-                publicKey
-            };
-            console.log(signed);
+
+                console.log(infoColor("Signing message"));
+                const message = argv.msg;
+                const passphrase = argv.passphrase;
+                const keys = Identities.Keys.fromPassphrase(passphrase);
+                const hash = Crypto.Crypto.HashAlgorithms.sha256(message);
+                const signature = Crypto.Crypto.Hash.signSchnorrBip340(hash, keys);
+                const publicKey = Identities.PublicKey.fromPassphrase(passphrase);
+                const signed = {
+                    message,
+                    signature,
+                    publicKey
+                };
+                console.log(signed);
         }
     }
     )
@@ -271,7 +272,7 @@ async function connectRelay() {
             const publicKey = argv.publicKey;
             const signature = argv.signature;
             const hash = Crypto.Crypto.HashAlgorithms.sha256(message);
-            const verify = Crypto.Crypto.Hash.verifySchnorr(
+            const verify = Crypto.Crypto.Hash.verifySchnorrBip340(
                 hash,
                 signature,
                 publicKey
